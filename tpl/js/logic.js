@@ -51,10 +51,12 @@ function drawListItem() {
 
 // Hide the input to add a new item
 function hideAddOrder() {
+  document.getElementById("order_item").disabled=false;
   document.getElementById("new_item").style.visibility="hidden";
 }
 
 // Display the input fields to add a new item
 function displayAddOrder() {
+  document.getElementById("order_item").disabled=true;
   document.getElementById("new_item").style.visibility="visible";
 }
