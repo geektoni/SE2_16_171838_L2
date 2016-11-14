@@ -1,7 +1,12 @@
 
-// Model methods
+/***** Model methods *****/
+
+// Warehouse list.
+// This list is updated when an element is
+// ordered and added.
 var list = [{name:"Wooden Stick", quantity:"30"}];
 
+// Check if an item is already inside the list
 function isPresent(item) {
   for (var i=0; i<list.length; i++) {
     if (list[i].name === item.name) {
@@ -11,6 +16,8 @@ function isPresent(item) {
   return -1;
 }
 
+// Add an item to the list and, if present,
+// update his previous quantity with the new one.
 function addItemToList(item) {
   var i = isPresent(item)
   if(i != -1) {
@@ -21,8 +28,12 @@ function addItemToList(item) {
   }
 
 }
+/********************/
 
-// Controller methods
+/***** Controller methods *****/
+
+// Add a new order inside the list, when the 'add'
+// button is pressed.
 function addOrder() {
   var item_name = document.getElementById("item_name").value;
   var item_quantity = document.getElementById("item_quantity").value;
@@ -31,8 +42,11 @@ function addOrder() {
   drawListItem();
 }
 
-// View methods
+/*******************/
 
+/***** View methods *****/
+
+// Draw the table with the item list
 function drawListItem() {
 
   var child = document.getElementById("item_table");
@@ -75,3 +89,5 @@ function displayAddOrder() {
   document.getElementById("order_item").disabled=true;
   document.getElementById("new_item").style.visibility="visible";
 }
+
+/*******************/
