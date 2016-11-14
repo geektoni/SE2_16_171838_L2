@@ -81,8 +81,14 @@ function addOrder() {
 
 function updateItemsLimit() {
   var number = parseInt(document.getElementById("max_items").value);
-  updateMaxItems(number);
-  if (tooMuchItems()) {alert("Warehouse limit reached!")};
+
+  if (!isNaN(number) && number > 0) {
+    updateMaxItems(number);
+    if (tooMuchItems()) {alert("Warehouse limit reached!")};
+  } else {
+    alert("This warehouse limit is invalid!");
+  }
+
 }
 
 function openAddOrder() {
