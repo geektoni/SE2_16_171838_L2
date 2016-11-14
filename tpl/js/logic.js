@@ -8,11 +8,15 @@ var list = [];
 var MAX_ITEMS = 30;
 var TOTAL_ITEMS = 0;
 
-// Check if an item is valid
-function isValid(item) {
-  if (item.quantity <= 0) return false;
-  if (item.name === "") return false;
-  return true;
+function Item(name, quantity) {
+  this.name = name;
+  this.quantity = quantity;
+  this.isValid = function () {
+    if (this.quantity <= 0) return false;
+    if (this.name === "") return false;
+    if (isNaN(this.quantity)) return false;
+    return true;
+  };
 }
 
 // Check if an item is already inside the list
@@ -61,10 +65,9 @@ function addItemToList(item) {
 // button is pressed.
 function addOrder() {
 
-  var item = { name: document.getElementById("item_name").value,
-              quantity: parseInt(document.getElementById("item_quantity").value)};
+  var item = new Item(document.getElementById("item_name").value, parseInt(document.getElementById("item_quantity").value));
 
-  if (isValid(item)) {
+  if (item.isValid()) {
     addItemToList(item);
     updateTotalItems();
     if (tooMuchItems()) {alert("Warehouse limit reached!")};
