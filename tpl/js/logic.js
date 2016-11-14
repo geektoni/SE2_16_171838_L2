@@ -5,9 +5,16 @@
 // This list is updated when an element is
 // ordered and added.
 var list = [];
+
+// Item limits for the list.
 var MAX_ITEMS = 30;
+
+// Sum of every item's quantity.
 var TOTAL_ITEMS = 0;
 
+// Definition of an ordered item.
+// name: item's name
+// quantity: item's quantity
 function Item(name, quantity) {
   this.name = name;
   this.quantity = quantity;
@@ -19,7 +26,8 @@ function Item(name, quantity) {
   };
 }
 
-// Check if an item is already inside the list
+// Check if an item is already inside the list.
+// item: item we want to find
 function isPresent(item) {
   for (var i=0; i<list.length; i++) {
     if (list[i].name === item.name) {
@@ -29,6 +37,8 @@ function isPresent(item) {
   return -1;
 }
 
+// Check if we have reached (or surpassed) the
+// list limit.
 function tooMuchItems(){
   if (MAX_ITEMS <= TOTAL_ITEMS) {
     return true;
@@ -36,10 +46,13 @@ function tooMuchItems(){
   return false;
 }
 
+// Update the list limit with a new value.
+// items: number of total items we want to set as limit.
 function updateMaxItems(items) {
   MAX_ITEMS = items;
 }
 
+// Update the total item count.
 function updateTotalItems() {
   TOTAL_ITEMS = 0;
   for (var i=0; i<list.length; i++) {
@@ -49,6 +62,7 @@ function updateTotalItems() {
 
 // Add an item to the list and, if present,
 // update his previous quantity with the new one.
+// item: item we want to insert into the list.
 function addItemToList(item) {
   var i = isPresent(item)
   if(i != -1) {
@@ -79,6 +93,9 @@ function addOrder() {
   drawListItem();
 }
 
+// Update the list limits. Check also if the number given
+// is valid and send an alert message if we have set a limit
+// too low for the current list.
 function updateItemsLimit() {
   var number = parseInt(document.getElementById("max_items").value);
 
@@ -91,6 +108,8 @@ function updateItemsLimit() {
 
 }
 
+// Display the order input fields. Send an alert if we
+// have reached (or surpassed) the list limit.
 function openAddOrder() {
   if (tooMuchItems()) {
     alert("Warehouse limit reached!");
@@ -135,7 +154,7 @@ function drawListItem() {
 }
 
 // Hide the input to add a new item
-// It also clear the input value.
+// It also clear the input values.
 function hideAddOrder() {
   document.getElementById("item_name").value="";
   document.getElementById("item_quantity").value="";

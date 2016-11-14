@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
   <head>
     <!-- Charset and page title -->
     <meta charset="utf-8">
@@ -7,23 +8,28 @@
     <!-- CSS file -->
     <link href="tpl/css/style.css" rel="stylesheet" type="text/css" />
   </head>
+
   <body id="body" onload="drawListItem();">
     <h2>Warehouse</h2>
+
+    <!--Table that display the item list-->
     <div id="new_item">
       <br />
       <input type="text" placeholder="Product Name" id="item_name" />
       <input type="text" placeholder="Quantity" id="item_quantity" />
       <button id="add_new_item" onclick="addOrder()">Add</button>
     </div>
-    <br />
 
+    <br />
     <button id="order_item" onclick="openAddOrder()">Order</button>
     <br/>
     <br />
+
     <label>Max Items</label>
     <br/>
     <input type="text" value="30" id="max_items" />
     <button id="update_max_items" onclick="updateItemsLimit()">Update</button>
     <script type='text/javascript' src='tpl/js/logic.js'></script>
   </body>
+
 </html>
