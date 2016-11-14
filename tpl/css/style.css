@@ -8,5 +8,5 @@ th {
 }
 
 #new_item {
-  visibility: hidden;
+  display: none;
 }
