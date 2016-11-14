@@ -17,33 +17,13 @@ var TOTAL_ITEMS = 0;
 // quantity: item's quantity
 function Item(name, quantity) {
   this.name = name;
-  this.quantity = quantity;
+  this.quantity = parseInt(quantity);
   this.isValid = function () {
     if (this.quantity <= 0) return false;
     if (this.name === "") return false;
     if (isNaN(this.quantity)) return false;
     return true;
   };
-}
-
-// Check if an item is already inside the list.
-// item: item we want to find
-function isPresent(item) {
-  for (var i=0; i<list.length; i++) {
-    if (list[i].name === item.name) {
-      return i;
-    }
-  }
-  return -1;
-}
-
-// Check if we have reached (or surpassed) the
-// list limit.
-function tooMuchItems(){
-  if (MAX_ITEMS <= TOTAL_ITEMS) {
-    return true;
-  }
-  return false;
 }
 
 // Update the list limit with a new value.
@@ -64,7 +44,7 @@ function updateTotalItems() {
 // update his previous quantity with the new one.
 // item: item we want to insert into the list.
 function addItemToList(item) {
-  var i = isPresent(item)
+  var i = isInside(item)
   if(i != -1) {
     list[i].quantity = item.quantity
   } else {
@@ -79,7 +59,7 @@ function addItemToList(item) {
 // button is pressed.
 function addOrder() {
 
-  var item = new Item(document.getElementById("item_name").value, parseInt(document.getElementById("item_quantity").value));
+  var item = new Item(document.getElementById("item_name").value, document.getElementById("item_quantity").value);
 
   if (item.isValid()) {
     addItemToList(item);
@@ -168,4 +148,26 @@ function displayAddOrder() {
   document.getElementById("new_item").style.display="inline";
 }
 
+/*******************/
+
+/***** Helper Methods *****/
+// Check if an item is already inside the list.
+// item: item we want to find
+function isInside(item) {
+  for (var i=0; i<list.length; i++) {
+    if (list[i].name === item.name) {
+      return i;
+    }
+  }
+  return -1;
+}
+
+// Check if we have reached (or surpassed) the
+// list limit.
+function tooMuchItems(){
+  if (MAX_ITEMS <= TOTAL_ITEMS) {
+    return true;
+  }
+  return false;
+}
 /*******************/
