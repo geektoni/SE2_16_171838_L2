@@ -18,8 +18,16 @@
         <td>30</td>
       </tr>
     </table>
+
+    <div id="new_item">
+      <br />
+      <input type="text" placeholder="Product Name" id="item_name" />
+      <input type="text" placeholder="Quantity" id="item_quantity" />
+      <button id="add_new_item" onclick="hideAddOrder()">Add</button>
+    </div>
     <br />
-    <button name="order_item">Order</button>
+
+    <button name="order_item" onclick="displayAddOrder()">Order</button>
     <script type='text/javascript' src='tpl/js/logic.js'></script>
   </body>
 </html>

@@ -6,3 +6,7 @@ table {
 th {
   text-align: left;
 }
+
+#new_item {
+  visibility: hidden;
+}
