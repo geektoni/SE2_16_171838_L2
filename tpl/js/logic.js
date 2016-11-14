@@ -46,18 +46,12 @@ function updateTotalItems() {
 // Add an item to the list and, if present,
 // update his previous quantity with the new one.
 function addItemToList(item) {
-
-  if (isValid(item)) {
-    var i = isPresent(item)
-    if(i != -1) {
-      list[i].quantity = item.quantity
-    } else {
-      list.push(item);
-    }
+  var i = isPresent(item)
+  if(i != -1) {
+    list[i].quantity = item.quantity
   } else {
-    alert("The item requested is not valid!");
+    list.push(item);
   }
-
 }
 /********************/
 
@@ -66,12 +60,19 @@ function addItemToList(item) {
 // Add a new order inside the list, when the 'add'
 // button is pressed.
 function addOrder() {
-  var item_name = document.getElementById("item_name").value;
-  var item_quantity = parseInt(document.getElementById("item_quantity").value);
-  addItemToList({name:item_name, quantity:item_quantity});
-  if (tooMuchItems) {alert("Warehouse limit reached!")};
-  updateTotalItems();
-  hideAddOrder();
+
+  var item = { name: document.getElementById("item_name").value,
+              quantity: parseInt(document.getElementById("item_quantity").value)};
+
+  if (isValid(item)) {
+    addItemToList(item);
+    updateTotalItems();
+    if (tooMuchItems()) {alert("Warehouse limit reached!")};
+    hideAddOrder();
+  } else {
+    alert("The item requested is not valid!");
+  }
+
   drawListItem();
 }
 
@@ -127,13 +128,13 @@ function drawListItem() {
 // Hide the input to add a new item
 function hideAddOrder() {
   document.getElementById("order_item").disabled=false;
-  document.getElementById("new_item").style.visibility="hidden";
+  document.getElementById("new_item").style.display="none";
 }
 
 // Display the input fields to add a new item
 function displayAddOrder() {
   document.getElementById("order_item").disabled=true;
-  document.getElementById("new_item").style.visibility="visible";
+  document.getElementById("new_item").style.display="inline";
 }
 
 /*******************/
