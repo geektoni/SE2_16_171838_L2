@@ -4,41 +4,52 @@
 // Warehouse list.
 // This list is updated when an element is
 // ordered and added.
-var list = [{name:"Wooden Stick", quantity:"30"}];
+var list = [];
 
-// Check if an item is valid
-function isValid(item) {
-  if (item.quantity <= 0) return false;
-  if (item.name === "") return false;
-  return true;
+// Item limits for the list.
+var MAX_ITEMS = 30;
+
+// Sum of every item's quantity.
+var TOTAL_ITEMS = 0;
+
+// Definition of an ordered item.
+// name: item's name
+// quantity: item's quantity
+function Item(name, quantity) {
+  this.name = name;
+  this.quantity = parseInt(quantity);
+  this.isValid = function () {
+    if (this.quantity <= 0) return false;
+    if (this.name === "") return false;
+    if (isNaN(this.quantity)) return false;
+    return true;
+  };
 }
 
-// Check if an item is already inside the list
-function isPresent(item) {
+// Update the list limit with a new value.
+// items: number of total items we want to set as limit.
+function updateMaxItems(items) {
+  MAX_ITEMS = items;
+}
+
+// Update the total item count.
+function updateTotalItems() {
+  TOTAL_ITEMS = 0;
   for (var i=0; i<list.length; i++) {
-    if (list[i].name === item.name) {
-      return i;
-    }
+      TOTAL_ITEMS += list[i].quantity;
   }
-  return -1;
 }
 
 // Add an item to the list and, if present,
 // update his previous quantity with the new one.
+// item: item we want to insert into the list.
 function addItemToList(item) {
-
-  if (isValid(item)) {
-    var i = isPresent(item)
-    if(i != -1) {
-      list[i].quantity = item.quantity
-    } else {
-      console.log(list);
-      list.push(item);
-    }
+  var i = isInside(item)
+  if(i != -1) {
+    list[i].quantity = item.quantity
   } else {
-    alert("The item requested is not valid!");
+    list.push(item);
   }
-
 }
 /********************/
 
@@ -47,11 +58,43 @@ function addItemToList(item) {
 // Add a new order inside the list, when the 'add'
 // button is pressed.
 function addOrder() {
-  var item_name = document.getElementById("item_name").value;
-  var item_quantity = document.getElementById("item_quantity").value;
-  addItemToList({name:item_name, quantity:item_quantity});
-  hideAddOrder();
+
+  var item = new Item(document.getElementById("item_name").value, document.getElementById("item_quantity").value);
+
+  if (item.isValid()) {
+    addItemToList(item);
+    updateTotalItems();
+    if (tooMuchItems()) {alert("Warehouse limit reached!")};
+    hideAddOrder();
+  } else {
+    alert("The item requested is not valid!");
+  }
+
   drawListItem();
+}
+
+// Update the list limits. Check also if the number given
+// is valid and send an alert message if we have set a limit
+// too low for the current list.
+function updateItemsLimit() {
+  var number = parseInt(document.getElementById("max_items").value);
+
+  if (!isNaN(number) && number > 0) {
+    updateMaxItems(number);
+    if (tooMuchItems()) {alert("Warehouse limit reached!")};
+  } else {
+    alert("This warehouse limit is invalid!");
+  }
+
+}
+
+// Display the order input fields. Send an alert if we
+// have reached (or surpassed) the list limit.
+function openAddOrder() {
+  if (tooMuchItems()) {
+    alert("Warehouse limit reached!");
+  }
+  displayAddOrder();
 }
 
 /*******************/
@@ -91,15 +134,40 @@ function drawListItem() {
 }
 
 // Hide the input to add a new item
+// It also clear the input values.
 function hideAddOrder() {
+  document.getElementById("item_name").value="";
+  document.getElementById("item_quantity").value="";
   document.getElementById("order_item").disabled=false;
-  document.getElementById("new_item").style.visibility="hidden";
+  document.getElementById("new_item").style.display="none";
 }
 
 // Display the input fields to add a new item
 function displayAddOrder() {
   document.getElementById("order_item").disabled=true;
-  document.getElementById("new_item").style.visibility="visible";
+  document.getElementById("new_item").style.display="inline";
 }
 
+/*******************/
+
+/***** Helper Methods *****/
+// Check if an item is already inside the list.
+// item: item we want to find
+function isInside(item) {
+  for (var i=0; i<list.length; i++) {
+    if (list[i].name === item.name) {
+      return i;
+    }
+  }
+  return -1;
+}
+
+// Check if we have reached (or surpassed) the
+// list limit.
+function tooMuchItems(){
+  if (MAX_ITEMS <= TOTAL_ITEMS) {
+    return true;
+  }
+  return false;
+}
 /*******************/
