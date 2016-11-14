@@ -7,8 +7,8 @@
     <!-- CSS file -->
     <link href="tpl/css/style.css" rel="stylesheet" type="text/css" />
   </head>
-  <body>
-    <table>
+  <body id="body" onload="drawListItem();">
+    <!--<table>
       <tr>
         <th>Item Name</th>
         <th>Quantity</th>
@@ -18,12 +18,12 @@
         <td>30</td>
       </tr>
     </table>
-
+-->
     <div id="new_item">
       <br />
       <input type="text" placeholder="Product Name" id="item_name" />
       <input type="text" placeholder="Quantity" id="item_quantity" />
-      <button id="add_new_item" onclick="hideAddOrder()">Add</button>
+      <button id="add_new_item" onclick="addOrder()">Add</button>
     </div>
     <br />
 
