@@ -4,7 +4,9 @@
 // Warehouse list.
 // This list is updated when an element is
 // ordered and added.
-var list = [{name:"Wooden Stick", quantity:"30"}];
+var list = [];
+var MAX_ITEMS = 30;
+var TOTAL_ITEMS = 0;
 
 // Check if an item is valid
 function isValid(item) {
@@ -23,6 +25,24 @@ function isPresent(item) {
   return -1;
 }
 
+function tooMuchItems(){
+  if (MAX_ITEMS <= TOTAL_ITEMS) {
+    return true;
+  }
+  return false;
+}
+
+function updateMaxItems(items) {
+  MAX_ITEMS = items;
+}
+
+function updateTotalItems() {
+  TOTAL_ITEMS = 0;
+  for (var i=0; i<list.length; i++) {
+      TOTAL_ITEMS += list[i].quantity;
+  }
+}
+
 // Add an item to the list and, if present,
 // update his previous quantity with the new one.
 function addItemToList(item) {
@@ -32,7 +52,6 @@ function addItemToList(item) {
     if(i != -1) {
       list[i].quantity = item.quantity
     } else {
-      console.log(list);
       list.push(item);
     }
   } else {
@@ -48,10 +67,25 @@ function addItemToList(item) {
 // button is pressed.
 function addOrder() {
   var item_name = document.getElementById("item_name").value;
-  var item_quantity = document.getElementById("item_quantity").value;
+  var item_quantity = parseInt(document.getElementById("item_quantity").value);
   addItemToList({name:item_name, quantity:item_quantity});
+  if (tooMuchItems) {alert("Warehouse limit reached!")};
+  updateTotalItems();
   hideAddOrder();
   drawListItem();
+}
+
+function updateItemsLimit() {
+  var number = parseInt(document.getElementById("max_items").value);
+  updateMaxItems(number);
+  if (tooMuchItems()) {alert("Warehouse limit reached!")};
+}
+
+function openAddOrder() {
+  if (tooMuchItems()) {
+    alert("Warehouse limit reached!");
+  }
+  displayAddOrder();
 }
 
 /*******************/

@@ -8,17 +8,7 @@
     <link href="tpl/css/style.css" rel="stylesheet" type="text/css" />
   </head>
   <body id="body" onload="drawListItem();">
-    <!--<table>
-      <tr>
-        <th>Item Name</th>
-        <th>Quantity</th>
-      </tr>
-      <tr>
-        <td>Wood Sticks</td>
-        <td>30</td>
-      </tr>
-    </table>
--->
+
     <div id="new_item">
       <br />
       <input type="text" placeholder="Product Name" id="item_name" />
@@ -27,7 +17,13 @@
     </div>
     <br />
 
-    <button id="order_item" onclick="displayAddOrder()">Order</button>
+    <button id="order_item" onclick="openAddOrder()">Order</button>
+    <br/>
+    <br />
+    <label>Max Items</label>
+    <br/>
+    <input type="text" id="max_items" />
+    <button id="update_max_items" onclick="updateItemsLimit()">Update</button>
     <script type='text/javascript' src='tpl/js/logic.js'></script>
   </body>
 </html>
