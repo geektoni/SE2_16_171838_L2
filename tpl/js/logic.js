@@ -2,9 +2,24 @@
 // Model methods
 var list = [{name:"Wooden Stick", quantity:"30"}];
 
+function isPresent(item) {
+  for (var i=0; i<list.length; i++) {
+    if (list[i].name === item.name) {
+      return i;
+    }
+  }
+  return -1;
+}
+
 function addItemToList(item) {
-  list.push(item);
-  console.log(list);
+  var i = isPresent(item)
+  if(i != -1) {
+    list[i].quantity = item.quantity
+  } else {
+    console.log(list);
+    list.push(item);
+  }
+
 }
 
 // Controller methods
