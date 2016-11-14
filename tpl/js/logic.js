@@ -6,6 +6,13 @@
 // ordered and added.
 var list = [{name:"Wooden Stick", quantity:"30"}];
 
+// Check if an item is valid
+function isValid(item) {
+  if (item.quantity <= 0) return false;
+  if (item.name === "") return false;
+  return true;
+}
+
 // Check if an item is already inside the list
 function isPresent(item) {
   for (var i=0; i<list.length; i++) {
@@ -19,12 +26,17 @@ function isPresent(item) {
 // Add an item to the list and, if present,
 // update his previous quantity with the new one.
 function addItemToList(item) {
-  var i = isPresent(item)
-  if(i != -1) {
-    list[i].quantity = item.quantity
+
+  if (isValid(item)) {
+    var i = isPresent(item)
+    if(i != -1) {
+      list[i].quantity = item.quantity
+    } else {
+      console.log(list);
+      list.push(item);
+    }
   } else {
-    console.log(list);
-    list.push(item);
+    alert("The item requested is not valid!");
   }
 
 }
