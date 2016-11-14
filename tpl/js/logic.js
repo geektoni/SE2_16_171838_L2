@@ -135,7 +135,10 @@ function drawListItem() {
 }
 
 // Hide the input to add a new item
+// It also clear the input value.
 function hideAddOrder() {
+  document.getElementById("item_name").value="";
+  document.getElementById("item_quantity").value="";
   document.getElementById("order_item").disabled=false;
   document.getElementById("new_item").style.display="none";
 }
