@@ -59,17 +59,21 @@ function addItemToList(item) {
 // button is pressed.
 function addOrder() {
 
+  // Get a new item from the page
   var item = new Item(document.getElementById("item_name").value, document.getElementById("item_quantity").value);
 
+  // If the item is valid, insert it into the list
   if (item.isValid()) {
     addItemToList(item);
     updateTotalItems();
-    if (tooMuchItems()) {alert("Warehouse limit reached!")};
+    // Check if we have reached the warehouse limit
+    if (tooManyItems()) {alert("Warehouse limit reached!")};
     hideAddOrder();
   } else {
     alert("The item requested is not valid!");
   }
 
+  // Draw the HTML table
   drawListItem();
 }
 
@@ -79,9 +83,10 @@ function addOrder() {
 function updateItemsLimit() {
   var number = parseInt(document.getElementById("max_items").value);
 
+  // If the value submitted is a number, update max item quantity
   if (!isNaN(number) && number > 0) {
     updateMaxItems(number);
-    if (tooMuchItems()) {alert("Warehouse limit reached!")};
+    if (tooManyItems()) {alert("Warehouse limit reached!")};
   } else {
     alert("This warehouse limit is invalid!");
   }
@@ -91,7 +96,7 @@ function updateItemsLimit() {
 // Display the order input fields. Send an alert if we
 // have reached (or surpassed) the list limit.
 function openAddOrder() {
-  if (tooMuchItems()) {
+  if (tooManyItems()) {
     alert("Warehouse limit reached!");
   }
   displayAddOrder();
@@ -109,6 +114,7 @@ function drawListItem() {
     document.getElementById("body").removeChild(child);
   }
 
+  // Create the table structure and headers
   var table = document.createElement("table");
   table.setAttribute("id", "item_table")
   var header_1 = document.createElement("th");
@@ -118,6 +124,8 @@ function drawListItem() {
   table.appendChild(header_1);
   table.appendChild(header_2);
 
+  // For every elements in the list, create a new table line
+  // and add it to the table.
   for (var i=0; i<list.length; i++) {
     var item = list[i]
     var line = document.createElement("tr");
@@ -136,8 +144,12 @@ function drawListItem() {
 // Hide the input to add a new item
 // It also clear the input values.
 function hideAddOrder() {
+
+  // Clear input fields
   document.getElementById("item_name").value="";
   document.getElementById("item_quantity").value="";
+
+  // Enable Order button and hide input fields
   document.getElementById("order_item").disabled=false;
   document.getElementById("new_item").style.display="none";
 }
@@ -164,7 +176,7 @@ function isInside(item) {
 
 // Check if we have reached (or surpassed) the
 // list limit.
-function tooMuchItems(){
+function tooManyItems(){
   if (MAX_ITEMS <= TOTAL_ITEMS) {
     return true;
   }
